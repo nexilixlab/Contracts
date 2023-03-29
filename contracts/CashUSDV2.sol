@@ -47,37 +47,59 @@ contract CashUSDV2 is Initializable, ERC20Upgradeable, PausableUpgradeable, Reen
     }
 
     function approve(address spender, uint256 amount) public override(ERC20Upgradeable) whenNotPaused() nonReentrant() returns (bool) {
-    require(!_blocked[msg.sender], "Sender account is blocked");
-    require(!_blocked[spender], "Spender account is blocked");
-    return super.approve(spender, amount);
-}
+        require(!_blocked[msg.sender], "Sender account is blocked");
+        require(!_blocked[spender], "Spender account is blocked");
+        return super.approve(spender, amount);
+    }
 
-function increaseAllowance(address spender, uint256 addedValue) public override(ERC20Upgradeable) whenNotPaused() nonReentrant() returns (bool) {
-    require(!_blocked[msg.sender], "Sender account is blocked");
-    require(!_blocked[spender], "Spender account is blocked");
-    return super.increaseAllowance(spender, addedValue);
-}
+    function increaseAllowance(address spender, uint256 addedValue) public override(ERC20Upgradeable) whenNotPaused() nonReentrant() returns (bool) {
+        require(!_blocked[msg.sender], "Sender account is blocked");
+        require(!_blocked[spender], "Spender account is blocked");
+        return super.increaseAllowance(spender, addedValue);
+    }
 
-function decreaseAllowance(address spender, uint256 subtractedValue) public override(ERC20Upgradeable) whenNotPaused() nonReentrant() returns (bool) {
-    require(!_blocked[msg.sender], "Sender account is blocked");
-    require(!_blocked[spender], "Spender account is blocked");
-    return super.decreaseAllowance(spender, subtractedValue);
-}
+    function decreaseAllowance(address spender, uint256 subtractedValue) public override(ERC20Upgradeable) whenNotPaused() nonReentrant() returns (bool) {
+        require(!_blocked[msg.sender], "Sender account is blocked");
+        require(!_blocked[spender], "Spender account is blocked");
+        return super.decreaseAllowance(spender, subtractedValue);
+    }
 
-function blockAccount(address account) public onlyOwner {
-    require(account != address(0), "Invalid address");
-    require(!_blocked[account], "Account is already blocked");
-    _blocked[account] = true;
-    emit AccountBlocked(account);
-}
+    function blockAccount(address account) public onlyOwner {
+        require(account != address(0), "Invalid address");
+        require(!_blocked[account], "Account is already blocked");
+        _blocked[account] = true;
+        emit AccountBlocked(account);
+    }
 
-function unblockAccount(address account) public onlyOwner {
-    require(account != address(0), "Invalid address");
-    require(_blocked[account], "Account is not blocked");
-    _blocked[account] = false;
-    emit AccountUnblocked(account);
-}
+    function unblockAccount(address account) public onlyOwner {
+        require(account != address(0), "Invalid address");
+        require(_blocked[account], "Account is not blocked");
+        _blocked[account] = false;
+        emit AccountUnblocked(account);
+    }
 
-event AccountBlocked(address indexed account);
-event AccountUnblocked(address indexed account);
+    function mint(address account, uint256 amount) public onlyOwner {
+        _mint(account, amount);
+    }
+
+    function burn(uint256 amount) public {
+        _burn(msg.sender, amount);
+    }
+    function transferOwnership(address newOwner) public onlyOwner {
+        require(newOwner != address(0), "New owner cannot be the zero address");
+        require(newOwner != owner(), "New owner is already the current owner");
+        // اضافه کردن هویت‌سنجی به دلخواه شما
+        // ...
+        emit OwnershipTransferred(owner(), newOwner);
+        _transferOwnership(newOwner);
+    }
+
+    // تابع داخلی برای تنظیم مالکیت قرارداد
+    function _transferOwnership(address newOwner) internal {
+        emit OwnershipTransferred(owner(), newOwner);
+        _owner = newOwner;
+    }
+
+    event AccountBlocked(address indexed account);
+    event AccountUnblocked(address indexed account);
 }
