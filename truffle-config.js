@@ -49,8 +49,8 @@ module.exports = {
       version: "0.8.12",      // Fetch exact version from solc-bin
       settings: {
         optimizer: {
-          enabled: true,
-          runs: 10000000   // Optimize for how many times you intend to run the code
+          enabled: false,
+          //runs: 10000000   // Optimize for how many times you intend to run the code
         }
       }
     },

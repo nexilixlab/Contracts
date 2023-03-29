@@ -1,11 +1,11 @@
-const CashUSD = artifacts.require("CashUSD");
 const CashUSDV2 = artifacts.require("CashUSDV2");
+const CashUSD = artifacts.require("CashUSD");
+
+const { upgradeProxy } = require('@openzeppelin/truffle-upgrades');
 
 module.exports = async function (deployer) {
-  const cashUSD = await CashUSD.deployed();
-  await deployer.deploy(CashUSDV2, "Cash USD V2", "CUSD2");
-  const cashUSDV2 = await CashUSDV2.deployed();
-  await cashUSD.upgrade(cashUSDV2.address);
-  await cashUSDV2.upgradeFrom(cashUSD.address, cashUSD.totalSupply());
-  await cashUSD.close();
+  await deployer.deploy(CashUSDV2, "CashUSD", "CUS");
+  const existing = await CashUSD.deployed();
+  const instance = await upgradeProxy(existing.address, CashUSDV2, { deployer });
+  console.log("CashUSDV2 upgraded at:", instance.address);
 };

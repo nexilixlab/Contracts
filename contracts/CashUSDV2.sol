@@ -89,12 +89,12 @@ contract CashUSDV2 is Initializable, ERC20Upgradeable, PausableUpgradeable, Reen
     }
 
     function transferOwnership(address newOwner) public onlyOwner {
-        require(newOwner != address(0), "New owner cannot be the zero address");
-        require(newOwner != owner(), "New owner is already the current owner");
-        // add identity verification if desired
-        emit OwnershipTransferred(owner(), newOwner);
-        _transferOwnership(newOwner);
-    }
+    require(newOwner != address(0), "New owner cannot be the zero address");
+    require(newOwner != owner(), "New owner is already the current owner");
+    // add optional identity verification here
+    emit OwnershipTransferred(owner(), newOwner);
+    _owner = newOwner;
+}
 
     function _transferOwnership(address newOwner) internal {
         emit OwnershipTransferred(owner(), newOwner);
