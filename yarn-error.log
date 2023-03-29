@@ -1,0 +1,36 @@
+Arguments: 
+  /home/eae966/.nvm/versions/node/v16.19.1/bin/node /home/eae966/.yarn/bin/yarn.js
+
+PATH: 
+  /home/eae966/.yarn/bin:/home/eae966/.config/yarn/global/node_modules/.bin:/home/eae966/.yarn/bin:/home/eae966/.config/yarn/global/node_modules/.bin:/home/eae966/.nvm/versions/node/v16.19.1/bin:/home/eae966/.yarn/bin:/home/eae966/.config/yarn/global/node_modules/.bin:/usr/local/bin:/usr/bin:/bin:/usr/local/sbin:/usr/sbin:/var/lib/snapd/snap/bin:/home/eae966/.local/bin:/home/eae966/bin:/home/eae966/.local/bin:/home/eae966/bin
+
+Yarn version: 
+  1.22.19
+
+Node version: 
+  16.19.1
+
+Platform: 
+  linux x64
+
+Trace: 
+  SyntaxError: /home/eae966/ProductionWorkspace/Blockchain/Blockchain/NexilixLab/Contracts/package.json: Unexpected token } in JSON at position 90
+      at JSON.parse (<anonymous>)
+      at /home/eae966/.yarn/lib/cli.js:1629:59
+      at Generator.next (<anonymous>)
+      at step (/home/eae966/.yarn/lib/cli.js:310:30)
+      at /home/eae966/.yarn/lib/cli.js:321:13
+
+npm manifest: 
+  {
+    "dependencies": {
+      "truffle": "^v5.8.1",
+      "truffle-flydax-verify": "^1.0.27",
+    }
+  }
+
+yarn manifest: 
+  No manifest
+
+Lockfile: 
+  No lockfile
